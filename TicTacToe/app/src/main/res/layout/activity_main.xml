@@ -288,14 +288,30 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3"
             >
+            <EditText
+                android:id="@+id/table_id"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="2"
+                android:paddingLeft="5dp"
+                android:background="#64aea8a8"
+                android:layout_marginRight="2dp"
+                android:hint="Table Code"
+                android:textColor="#26ff22"
+                android:textColorHint="#fff">
+
+            </EditText>
             <Button
-                android:id="@+id/player_1_id"
-                android:layout_width="wrap_content"
+                android:id="@+id/joinTable"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="1 Players"
+                android:text="Join Or Create"
                 android:background="#64aea8a8"
                 android:textColor="#a3eaeaea"
+                android:layout_weight="1"
                 />
 
         </LinearLayout>

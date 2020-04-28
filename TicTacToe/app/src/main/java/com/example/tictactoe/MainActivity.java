@@ -1,5 +1,6 @@
 package com.example.tictactoe;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,12 +13,34 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import javax.annotation.Nullable;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button a1,a2,a3,b1,b2,b3,c1,c2,c3,player_1;
+    private Button a1,a2,a3,b1,b2,b3,c1,c2,c3,joinTable;
+    private EditText tableCode;
     private Button[] bArray;
     private boolean turn = true;
     private int turn_count = 0;
@@ -29,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Chronometer chronometer_0,chronometer_x;
     private long chrono_x_count,chrono_0_count;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //int playerId = 1;
+    private boolean lastUser=false;
 
 
     @Override
@@ -101,6 +127,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         c1 = findViewById(R.id.id_7);
         c2 = findViewById(R.id.id_8);
         c3 = findViewById(R.id.id_9);
+        joinTable = findViewById(R.id.joinTable);
+        tableCode = findViewById(R.id.table_id);
+
+        tableCode.setText(new Random().nextInt(9999)+"");
 
         o_wins = findViewById(R.id.o_wins_id);
         x_wins = findViewById(R.id.x_wins_id);
@@ -108,11 +138,80 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         turnShow = findViewById(R.id.turnShow_id);
         resetButton = findViewById(R.id.resetButton_id);
-        player_1 = findViewById(R.id.player_1_id);
+        joinTable = findViewById(R.id.joinTable);
 
         chronometer_0 = findViewById(R.id.o_chronometer_id);
         chronometer_x = findViewById(R.id.x_chronometer_id);
 
+        joinTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                joinOrCreateTable();
+            }
+        });
+
+
+
+    }
+
+    private void joinOrCreateTable() {
+        System.out.println("CLICK");
+        CollectionReference ref=db.collection(tableCode.getText().toString());
+        ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.getResult().isEmpty()){
+                    CollectionReference ref=db.collection(tableCode.getText().toString());
+                    Map<String,Object> map=new HashMap<>();
+                    map.put("userId",true);
+                    map.put("buttonId",-1);
+                    ref.add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if(task.isSuccessful()){
+                                turn=false;
+                                lastUser=true;
+                                Toast.makeText(MainActivity.this, "You joining as X-Player..", Toast.LENGTH_SHORT).show();
+                                joinTable();
+                            }
+                        }
+                    });
+
+                }else{
+
+
+                    lastUser=false;
+                    turn=true;
+                    Toast.makeText(MainActivity.this, "You joining as 0-Player..", Toast.LENGTH_SHORT).show();
+                    turnShow.setText("Turn: 0-Player");
+                    joinTable();
+
+                }
+
+
+
+            }
+        });
+    }
+
+
+    public void joinTable(){
+        CollectionReference ref=db.collection(tableCode.getText().toString());
+        ref.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                List<DocumentChange> documents=queryDocumentSnapshots.getDocumentChanges();
+                for(DocumentChange documentChange:documents){
+
+                    QueryDocumentSnapshot document=documentChange.getDocument();
+                    int value=document.getLong("buttonId").intValue();
+                    lastUser = document.getBoolean("userId");
+                    System.out.println(value+"  "+lastUser);
+                    updateValue(value);
+
+                }
+            }
+        });
     }
 
 
@@ -126,7 +225,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void buttonClicked(Button b) {
 
-        if(turn){
+        if(lastUser==turn)
+            return;
+        CollectionReference ref=db.collection(tableCode.getText().toString());
+        Map<String,Object> map=new HashMap<>();
+        map.put("userId",turn);
+        map.put("buttonId",b.getId());
+        ref.add(map).addOnCompleteListener(this, new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if(task.isSuccessful()){
+                    System.out.println("Success");
+                }
+            }
+        });
+
+    }
+
+    public void updateValue(int id){
+        if(id==-1){
+            return;
+        }
+        Button b= findViewById(id);
+        if(lastUser){
             chronometer_x.setBase(SystemClock.elapsedRealtime() - chrono_x_count);
             chronometer_x.start();
 
@@ -148,16 +269,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //b.setBackgroundColor(Color.GREEN);
         b.setClickable(false);
         // change the turn value
-        turn = ! turn;
+        //turn = ! turn;
 
-        if(turn){
+        if(lastUser){
             turnShow.setText("Turn: 0-Player");
         }else{
             turnShow.setText("Turn: X-Player");
         }
         checkForWinner();
-
     }
+
+
 
     private void checkForWinner() {
         boolean there_is_a_winner = false;
