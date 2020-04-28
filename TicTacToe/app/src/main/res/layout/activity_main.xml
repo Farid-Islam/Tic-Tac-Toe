@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="2dp"
+    android:gravity="center"
+    android:background="@drawable/lighint_wall"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_weight="0.6"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="0dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tic Tac Toe"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textColor="#a3eaeaea"
+            />
+        <TextView
+            android:id="@+id/turnShow_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Turn: 0-Player"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="#eaeaea"
+
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="0.1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+        <Chronometer
+            android:id="@+id/o_chronometer_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0-Time: 45:56"
+            android:textColor="#26ff22"
+            />
+
+        <Button
+            android:id="@+id/resetButton_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:background="#64aea8a8"
+            android:textColor="#a3eaeaea"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            />
+        <Chronometer
+            android:id="@+id/x_chronometer_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X-Time: 45:56"
+            android:textColor="#26ff22"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="2.4"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:gravity="center"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <Button
+                android:id="@+id/id_1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                android:layout_marginRight="5dp"
+                />
+            <Button
+                android:id="@+id/id_2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                android:layout_marginRight="5dp"
+                />
+            <Button
+                android:id="@+id/id_3"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <Button
+                android:id="@+id/id_4"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                />
+            <Button
+                android:id="@+id/id_5"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                />
+            <Button
+                android:id="@+id/id_6"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                android:layout_marginTop="5dp"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <Button
+                android:id="@+id/id_7"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                />
+            <Button
+                android:id="@+id/id_8"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                />
+            <Button
+                android:id="@+id/id_9"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:textColor="#eaeaea"
+                android:textSize="50sp"
+                android:background="#64aea8a8"
+                android:layout_marginTop="5dp"
+                />
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center|top"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            >
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0-wins"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textColor="#a3eaeaea"
+
+                />
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="X-wins"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textColor="#a3eaeaea"
+                />
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Draw"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textColor="#a3eaeaea"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            >
+
+            <TextView
+                android:id="@+id/o_wins_id"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textColor="#a3eaeaea"
+
+                />
+            <TextView
+                android:id="@+id/x_wins_id"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textColor="#a3eaeaea"
+
+                />
+            <TextView
+                android:id="@+id/draw_id"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textColor="#a3eaeaea"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            >
+            <Button
+                android:id="@+id/player_1_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 Players"
+                android:background="#64aea8a8"
+                android:textColor="#a3eaeaea"
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
